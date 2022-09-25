@@ -1,10 +1,12 @@
-﻿#include <string.h>
+﻿#pragma warning(disable : 4996)
+#include <string.h>
+#include <stdlib.h>
 
 char* digits[] = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 char* teens[] = { "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
 char* tens[] = { "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
 
-int matchToken(char* token)
+int matchToken(const char* token)
 {
     if (!strcmp(token, "and"))
     {
@@ -104,6 +106,11 @@ long parse_int(const char* number)
     // 3. A thousand B hundred C (e.g. three thousand five hundred sixty-six = 3566)
     // 4. A hundred B thousand C hundred D (e.g. two hundred fifty-five thousand five hundred sixty-six = 255566)
 
+    // Bonus comments:
+    // 2. The number B can be zero (e.g. five hundred = 500)
+    // 3. The number C can be zero (e.g. three thousand five hundred = 3500)
+    // 4. The number B and D can be zero (e.g. one hundred thousand five hundred = 100500)
+
     // Algorithm:
     // 1. Identify the pattern
     // 2. Split the numbers.
@@ -122,52 +129,154 @@ long parse_int(const char* number)
 
         char* hundred = strstr(numberCopy, "hundred");
 
-        char firstToken[20] = { 0 };
-        memcpy(firstToken, numberCopy, (hundred - numberCopy - 1) * sizeof(char));
-
-        a = matchToken(firstToken);
-
-        int i = 0, j = 0;
-        char subtoken[20];
-
-        int lenOfHundred = strlen(hundred);
-
-        for (i = 0; i < lenOfHundred + 1; ++i)
+        if (hundred != 0)
         {
-            if (i == lenOfHundred || hundred[i] == ' ')
+            char firstToken[20] = { 0 };
+            memcpy(firstToken, numberCopy, (hundred - numberCopy - 1) * sizeof(char));
+
+            a = matchToken(firstToken);
+
+            int lenOfHundred = strlen(hundred);
+
+            if (lenOfHundred == 7)
             {
-                subtoken[j] = '\0';
+                return a*100;
+            }
 
-                int value = matchToken(subtoken);
+            int i = 0, j = 0;
+            char subtoken[20];
 
-                if (value != -1)
+            for (i = 0; i < lenOfHundred; ++i)
+            {
+                if (hundred[i] == ' ')
                 {
-                    b += value;
+                    subtoken[j] = '\0';
+
+                    int value = matchToken(subtoken);
+
+                    if (value != -1)
+                    {
+                        b += value;
+                    }
+
+                    j = 0;
+                }
+                else
+                {
+                    subtoken[j++] = hundred[i];
                 }
 
-                j = 0;
+                if (i == lenOfHundred - 1)
+                {
+                    subtoken[j] = '\0';
+
+                    int value = matchToken(subtoken);
+
+                    if (value != -1)
+                    {
+                        b += value;
+                    }
+                }
             }
-            else
+
+            numberParsed = a * 100 + b;
+        }
+        else
+        {
+            char* thousand = strstr(numberCopy, "thousand");
+
+            char firstToken[20] = { 0 };
+            memcpy(firstToken, numberCopy, (thousand - numberCopy - 1) * sizeof(char));
+
+            a = matchToken(firstToken);
+
+            int lenOfThousand = strlen(thousand);
+
+            if (lenOfThousand == 8)
             {
-                subtoken[j++] = hundred[i];
+                return a * 1000;
             }
+
+            int i = 0, j = 0;
+            char subtoken[20];
+
+            for (i = 0; i < lenOfThousand; ++i)
+            {
+                if (thousand[i] == ' ')
+                {
+                    subtoken[j] = '\0';
+
+                    int value = matchToken(subtoken);
+
+                    if (value != -1)
+                    {
+                        b += value;
+                    }
+
+                    j = 0;
+                }
+                else
+                {
+                    subtoken[j++] = thousand[i];
+                }
+
+                if (i == lenOfThousand - 1)
+                {
+                    subtoken[j] = '\0';
+
+                    int value = matchToken(subtoken);
+
+                    if (value != -1)
+                    {
+                        b += value;
+                    }
+                }
+            }
+
+            numberParsed = a * 1000 + b;
         }
 
-        numberParsed = a * 100 + b;
     }
     else if (pattern == 2) {
         int a, b;
 
         char* thousand = strstr(numberCopy, "thousand");
+        char* hundred = strstr(numberCopy, "hundred");
 
-        char firstToken[20] = { 0 };
-        memcpy(firstToken, numberCopy, (thousand - numberCopy - 1) * sizeof(char));
+        if (hundred < thousand)
+        {
+            // A hundred thousand B
+            char firstToken[20] = { 0 };
+            memcpy(firstToken, numberCopy, (hundred - numberCopy - 1) * sizeof(char));
 
-        a = matchToken(firstToken);
+            a = matchToken(firstToken);
 
-        b = parse_int(thousand + 9);
+            int lenOfThousand = strlen(thousand);
 
-        numberParsed = a * 1000 + b;
+            if (lenOfThousand == 8) {
+                numberParsed = a * 100 * 1000;
+            }
+            else {
+                char secondToken[20] = {0};
+                memcpy(secondToken, thousand + 9, (lenOfThousand-9) * sizeof(char));
+
+                b = matchToken(secondToken);
+
+                numberParsed = a * 100 * 1000 + b;
+            }
+        }
+        else
+        {
+            // A thousand B hundred C
+            char firstToken[20] = { 0 };
+            memcpy(firstToken, numberCopy, (thousand - numberCopy - 1) * sizeof(char));
+
+            a = matchToken(firstToken);
+
+            b = parse_int(thousand + 9);
+
+            numberParsed = a * 1000 + b;
+        }
     }
     else if (pattern == 3) {
         int a, b;
@@ -181,28 +290,38 @@ long parse_int(const char* number)
 
         char* thousand = strstr(numberCopy, "thousand");
 
-        char secondToken[20] = {0};
-        int amountToCopy = (thousand - firstHundred - 9) * sizeof(char);
-
-        memcpy(secondToken, firstHundred + 8, amountToCopy > 0 ? amountToCopy : 1);    // !
-
-        char* spaceInStr = strchr(secondToken, ' ');
-
-        if (spaceInStr != 0)
+        if (thousand-firstHundred == 8)
         {
-            b = matchToken(spaceInStr + 1);
+            // e.g. five hundred thousand
+            a*=1000;
         }
         else
         {
-            b = matchToken(secondToken);
-        }
+            char secondToken[20] = {0};
+            int amountToCopy = (thousand - firstHundred - 9) * sizeof(char);
 
-        a = (a+b)*1000;
+            memcpy(secondToken, firstHundred + 8, amountToCopy > 0 ? amountToCopy : 1);    // !
+
+            char* spaceInStr = strchr(secondToken, ' ');
+
+            if (spaceInStr != 0)
+            {
+                b = matchToken(spaceInStr + 1);
+            }
+            else
+            {
+                b = matchToken(secondToken);
+            }
+
+            a = (a+b)*1000;
+        }
 
         b = parse_int(thousand + 9);
 
         numberParsed = a + b;
     }
+
+    free(numberCopy);
 
     return numberParsed;
 }
