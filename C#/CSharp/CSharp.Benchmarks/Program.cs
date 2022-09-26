@@ -6,6 +6,6 @@ public class Program
 {
 	public static void Main()
 	{
-		BenchmarkRunner.Run<SudokuValidatorBenchmarks>();
+		BenchmarkRunner.Run<PrimeStreamingBenchmarks>();
 	}
 }
