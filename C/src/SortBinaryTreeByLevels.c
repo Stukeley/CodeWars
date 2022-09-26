@@ -1,4 +1,5 @@
-﻿//
+﻿// Sort binary tree by levels
+// https://www.codewars.com/kata/52bef5e3588c56132c0003bc
 // Created by Rafał Klinowski on 24.09.2022.
 //
 #include <stddef.h>

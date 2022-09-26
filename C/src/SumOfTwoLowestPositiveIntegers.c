@@ -1,4 +1,5 @@
-﻿//
+﻿// Sum of two lowest positive integers
+// https://www.codewars.com/kata/558fc85d8fd1938afb000014
 // Created by Rafał Klinowski on 23.09.2022.
 //
 

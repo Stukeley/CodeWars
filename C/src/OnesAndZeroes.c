@@ -1,4 +1,5 @@
-﻿//
+﻿// Ones and Zeros
+// https://www.codewars.com/kata/578553c3a1b8d5c40300037c
 // Created by Rafał Klinowski on 23.09.2022.
 //
 #include <stddef.h>

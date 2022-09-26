@@ -1,4 +1,5 @@
-﻿//
+﻿// Playing with digits
+// https://www.codewars.com/kata/5552101f47fc5178b1000050
 // Created by Rafał Klinowski on 23.09.2022.
 //
 #include <stdio.h>

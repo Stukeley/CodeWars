@@ -1,4 +1,5 @@
-﻿//
+﻿// Mean Square Error
+// https://www.codewars.com/kata/51edd51599a189fe7f000015
 // Created by Rafał Klinowski on 24.09.2022.
 //
 #include <stddef.h>

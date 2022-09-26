@@ -1,4 +1,5 @@
-﻿#pragma warning(disable : 4996)
+﻿// Unfinished
+#pragma warning(disable : 4996)
 #include <string.h>
 #include <stdlib.h>
 

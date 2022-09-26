@@ -1,4 +1,5 @@
-﻿//
+﻿// Take a Ten Minutes Walk
+// https://www.codewars.com/kata/54da539698b8a2ad76000228
 // Created by Rafał Klinowski on 23.09.2022.
 //
 #include <stdbool.h>

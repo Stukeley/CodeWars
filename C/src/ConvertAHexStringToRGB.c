@@ -1,4 +1,5 @@
-﻿//
+﻿// Convert A Hex String To RGB
+// https://www.codewars.com/kata/5282b48bb70058e4c4000fa7
 // Created by Rafał Klinowski on 24.09.2022.
 //
 #include <stdlib.h>

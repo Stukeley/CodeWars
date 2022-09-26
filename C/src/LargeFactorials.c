@@ -1,4 +1,5 @@
-﻿//
+﻿// Large Factorials
+// https://www.codewars.com/kata/557f6437bf8dcdd135000010
 // Created by Rafał Klinowski on 24.09.2022.
 //
 #include <stdio.h>

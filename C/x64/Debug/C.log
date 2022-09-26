@@ -1,5 +1,2 @@
 ﻿  Main.c
-C:\Programowanie\CodeWars\C\Main.c(140,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Programowanie\CodeWars\C\Main.c(189,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Programowanie\CodeWars\C\Main.c(255,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   C.vcxproj -> C:\Programowanie\CodeWars\C\x64\Debug\C.exe

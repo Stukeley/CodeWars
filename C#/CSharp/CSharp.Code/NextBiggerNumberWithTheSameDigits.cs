@@ -1,4 +1,6 @@
-﻿namespace CSharp.Code;
+﻿// Unfinished
+
+namespace CSharp.Code;
 
 public class NextBiggerNumberWithTheSameDigits
 {

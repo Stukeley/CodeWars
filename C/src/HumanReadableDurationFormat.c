@@ -1,4 +1,5 @@
-﻿//
+﻿// Human readable duration format
+// https://www.codewars.com/kata/52742f58faf5485cae000b9a
 // Created by Rafał Klinowski on 23.09.2022.
 //
 #pragma warning(disable: 4996)

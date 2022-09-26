@@ -1,6 +1,12 @@
-﻿namespace CSharp.Code;
+﻿// Sums of Perfect Squares
+// https://www.codewars.com/kata/5a3af5b1ee1aaeabfe000084
+// Author: Rafał Klinowski
 
+namespace CSharp.Code;
+
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class SumOfSquares
 {
