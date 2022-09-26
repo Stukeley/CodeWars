@@ -5,3 +5,9 @@
 **/cmake-build-debug
 **/bin
 **/obj
+**/C/.vs/*
+**/cmake-build-debug/*
+**/x64/*
+C/.vs/**
+C/cmake-build-debug/**
+C/x64/**
