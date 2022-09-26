@@ -1,3 +1,0 @@
-C:/Programowanie/CodeWars/C/cmake-build-debug/CMakeFiles/C.dir
-C:/Programowanie/CodeWars/C/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Programowanie/CodeWars/C/cmake-build-debug/CMakeFiles/rebuild_cache.dir
